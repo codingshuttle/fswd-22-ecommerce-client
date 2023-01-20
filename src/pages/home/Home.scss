@@ -3,6 +3,8 @@
         margin-top: 80px;
 
         .info {
+            text-align: center;
+            padding-bottom: 10px;
             .subheading {
                 margin-top: 10px;
             }
@@ -10,11 +12,11 @@
 
         .content {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             flex-wrap: wrap;
             align-items: center;
             row-gap: 40px;
-            column-gap: 1%;
+            column-gap: 20px;
             margin-top: 20px;
         }
     }
