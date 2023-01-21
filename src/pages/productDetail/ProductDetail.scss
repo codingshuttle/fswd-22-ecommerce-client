@@ -1,15 +1,19 @@
 .ProductDetail {
     margin-top: 40px;
-    .product-layout{
+    .product-layout {
         display: flex;
 
         .product-img {
             max-width: 600px;
             min-width: 400px;
             height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             img {
-                width: 100%;
+                height: 100%;
+                object-fit: contain;
                 transform: scale(0.9);
             }
         }
@@ -67,6 +71,14 @@
                     }
                 }
             }
+        }
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .ProductDetail {
+        .product-layout {
+            flex-direction: column;
         }
     }
 }

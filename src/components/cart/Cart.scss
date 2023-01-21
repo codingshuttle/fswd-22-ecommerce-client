@@ -24,8 +24,48 @@
         background-color: white;
         animation: cartSlider 0.3s ease forwards;
         transform: translateX(100%);
-    }
 
+        .header {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-inline: 8px;
+            border-bottom: 1px solid rgba($color: #000000, $alpha: 0.5);
+
+            .close-btn {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                cursor: pointer;
+                font-weight: 500;
+
+                &:hover {
+                    opacity: 0.6;
+                }
+
+                &:active {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .checkout-info {
+            margin-top: 40px;
+            padding: 8px;
+            border-top: 1px solid rgba($color: #000000, $alpha: 0.5);
+            .total-amount {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .checkout {
+                margin: 16px 8px;
+                text-align: center;
+            }
+        }
+    }
 }
 
 @keyframes cartSlider {

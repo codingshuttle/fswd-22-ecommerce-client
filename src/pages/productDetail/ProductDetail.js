@@ -1,13 +1,19 @@
 import React from "react";
+import { useParams } from "react-router";
 import dummyImg from "../../assets/naruto.jpeg";
-import './ProductDetail.scss'
+import "./ProductDetail.scss";
 
 function ProductDetail() {
+
+    const params = useParams();
+
+    console.log('params', params);
+
     return (
         <div className="ProductDetail">
             <div className="container">
                 <div className="product-layout">
-                    <div className="product-img center">
+                    <div className="product-img">
                         <img src={dummyImg} alt="product img" />
                     </div>
                     <div className="product-info">
@@ -28,13 +34,24 @@ function ProductDetail() {
                                 <span className="quantity">3</span>
                                 <span className="btn increment">+</span>
                             </div>
-                            <button className="btn-primary add-to-cart">Add to Cart</button>
+                            <button className="btn-primary add-to-cart">
+                                Add to Cart
+                            </button>
                         </div>
 
                         <div className="return-policy">
                             <ul>
-                                <li>This product is made to order and is typically printed in 3-6 working days. Your entire order will ship out together.</li>
-                                <li>Since this product is printed on demand especially for you, it is not eligible for cancellations and returns. Read our Return Policy.</li>
+                                <li>
+                                    This product is made to order and is
+                                    typically printed in 3-6 working days. Your
+                                    entire order will ship out together.
+                                </li>
+                                <li>
+                                    Since this product is printed on demand
+                                    especially for you, it is not eligible for
+                                    cancellations and returns. Read our Return
+                                    Policy.
+                                </li>
                             </ul>
                         </div>
                     </div>
