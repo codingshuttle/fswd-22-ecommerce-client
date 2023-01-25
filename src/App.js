@@ -1,11 +1,21 @@
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
-import Categories from "./pages/categories/Categories";
+import Collection from "./pages/collection/Collection";
 import Home from "./pages/home/Home";
 import ProductDetail from "./pages/productDetail/ProductDetail";
+import {useDispatch} from 'react-redux'
+import { fetchCategories } from "./redux/categorySlice";
 
 function App() {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchCategories())
+    }, [])
+
     return (
         <div className="App">
             <Navbar />
@@ -14,7 +24,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route
                         path="/category/:categoryId?"
-                        element={<Categories />}
+                        element={<Collection />}
                     />
                     <Route
                         path="/products/:productId"

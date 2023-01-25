@@ -1,12 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import dummyImg from '../../assets/naruto.jpeg'
 import './Product.scss'
 
 function Product({product}) {
     const navigate = useNavigate();
-
-    console.log('product', product);
 
     return (
         <div className="Product" onClick={() => navigate(`/products/${product?.attributes.key}`)}>

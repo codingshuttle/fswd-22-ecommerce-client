@@ -1,33 +1,42 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import Product from "../../components/product/Product";
-import "./Categories.scss";
+import { axiosClient } from "../../utils/axiosClient";
+import "./Collection.scss";
 
-function Categories() {
+function Collection() {
     const navigate = useNavigate();
     const params = useParams();
+    const [categoryId, setCategoryId] = useState("");
+    const categories = useSelector((state) => state.categoryReducer.categories);
+    const [products, setProducts] = useState([]);
 
-    const [categoryId, setCategoryId] = useState('');
-
-    const categoryList = [
+    const sortOptions = [
         {
-            id: "comics",
-            value: "Comics",
+            value: "Price - Low To High",
+            sort: "price",
         },
         {
-            id: "tv-shows",
-            value: "TV Shows",
-        },
-        {
-            id: "sports",
-            value: "Sports",
+            value: "Newest First",
+            sort: "createdAt",
         },
     ];
 
+    const [sortBy, setSortBy] = useState(sortOptions[0].sort);
+
+    async function fetchProducts() {
+        const url = params.categoryId
+            ? `/products?populate=image&filters[category][key][$eq]=${params.categoryId}&sort=${sortBy}`
+            : `/products?populate=image&sort=${sortBy}`;
+        const response = await axiosClient.get(url);
+        setProducts(response.data.data);
+    }
+
     useEffect(() => {
         setCategoryId(params.categoryId);
-        //api call 
-    }, [params])
+        fetchProducts();
+    }, [params, sortBy]);
 
     function updateCategory(e) {
         navigate(`/category/${e.target.value}`);
@@ -53,14 +62,13 @@ function Categories() {
                                 className="select-sort-by"
                                 name="sort-by"
                                 id="sort-by"
+                                onChange={(e) => setSortBy(e.target.value)}
                             >
-                                <option value="relavance">Relavance</option>
-                                <option value="newest-first">
-                                    Newest First
-                                </option>
-                                <option value="price-lth">
-                                    Price - Low To High
-                                </option>
+                                {sortOptions.map((item) => (
+                                    <option key={item.sort} value={item.sort}>
+                                        {item.value}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -69,28 +77,29 @@ function Categories() {
                     <div className="filter-box">
                         <div className="category-filter">
                             <h3>Category</h3>
-                            {categoryList.map((item) => (
+                            {categories.map((item) => (
                                 <div key={item.id} className="filter-radio">
                                     <input
                                         name="category"
                                         type="radio"
-                                        value={item.id}
+                                        value={item.attributes.key}
                                         id={item.id}
                                         onChange={updateCategory}
-                                        checked={item.id === categoryId}
+                                        checked={
+                                            item.attributes.key === categoryId
+                                        }
                                     />
-                                    <label htmlFor={item.id}>{item.value}</label>
+                                    <label htmlFor={item.id}>
+                                        {item.attributes.title}
+                                    </label>
                                 </div>
                             ))}
                         </div>
                     </div>
                     <div className="products-box">
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
+                        {products.map((product) => (
+                            <Product key={product.id} product={product} />
+                        ))}
                     </div>
                 </div>
             </div>
@@ -98,4 +107,4 @@ function Categories() {
     );
 }
 
-export default Categories;
+export default Collection;
